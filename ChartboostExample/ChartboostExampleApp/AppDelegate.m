@@ -19,20 +19,24 @@
 @implementation AppDelegate 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Chartboost startWithAppId:@"53fadf0fc26ee44b06c83ecf" appSignature:@"0f826389808ef0f260256a1ec632f6bedce8c4d0" delegate:self];
+ 
     return YES;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+   // NSString* str=nil;
+   // str=@"fuck";
+   // NSLog(@"%@",str);
 // Print IFA (Identifier for Advertising) in Output section. Add to applicationDidBecomeActive. iOS 6+ devices only.
     NSString* ifa = [[[NSClassFromString(@"ASIdentifierManager") sharedManager] advertisingIdentifier] UUIDString];ifa = [[ifa stringByReplacingOccurrencesOfString:@"-" withString:@""] lowercaseString];NSLog(@"IFA: %@",ifa);
     
     
     // Begin a user session. Must not be dependent on user actions or any prior network requests.
     // Must be called every time your app becomes active.
-    [Chartboost startWithAppId:@"53fadf0fc26ee44b06c83ecf" appSignature:@"0f826389808ef0f260256a1ec632f6bedce8c4d0" delegate:self];
     
     [[Chartboost sharedChartboost] showInterstitial:CBLocationHomeScreen];
-    
+    [[Chartboost sharedChartboost] showInterstitial:CBLocationQuit];
     // Begin Newsfeed initialization.
     CBNewsfeed *newsfeed = [CBNewsfeed shared];
     newsfeed.delegate = self;
@@ -60,7 +64,7 @@
 
 - (BOOL)shouldDisplayInterstitial:(NSString *)location {
     NSLog(@"about to display interstitial at location %@", location);
-
+    
     // For example:
     // if the user has left the main menu and is currently playing your game, return NO;
     
